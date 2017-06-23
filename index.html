@@ -1,0 +1,57 @@
+---
+layout: index
+---
+<!--
+  -- Blog
+  -->
+<div class="jumbotron">
+	<div class="container">
+		<h1 class="display-6">Blog</h1>
+		<hr class="my-4">
+		<p class="lead">Current news from TeamNexus</p>
+	</div>
+</div>
+
+<div class="container">
+	{% for post in paginator.posts %}
+	<div class="card">
+		<div class="card-block">
+			<a href="{{ post.url }}">
+				<h4 class="card-title">{{ post.title }}</h4>
+			</a>
+			<p class="card-text">{{ post.excerpt | markdownify }}</p>
+			<a href="{{ post.url }}" class="btn btn-primary">Continue reading</a>
+		</div>
+	</div>
+	<div class="gap-xx">&nbsp;</div>
+	{% endfor %}
+	
+	{% if paginator.total_pages > 1 %}
+	<nav aria-label="Page navigation example">
+		<ul class="pagination">
+			{% if paginator.previous_page %}
+			<li class="page-item"><a class="page-link" href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}">Previous</a></li>
+			{% else %}
+			<li class="page-item disabled"><span class="page-link">Previous</span></li>
+			{% endif %}
+
+			{% for page in (1..paginator.total_pages) %}
+			{% if page == paginator.page %}
+			<li class="page-item active"><span class="page-link">{{ page }}</span></li>
+			{% elsif page == 1 %}
+			<li class="page-item"><a class="page-link" href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}">{{ page }}</a></li>
+			{% else %}
+			<li class="page-item"><a class="page-link" href="{{ site.paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: ':num', page }}">{{ page }}</a></li>
+			{% endif %}
+			{% endfor %}
+
+			{% if paginator.next_page %}
+			<li class="page-item"><a class="page-link" href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}">Next</a></li>
+			{% else %}
+			<li class="page-item disabled"><span class="page-link">Next</span></li>
+			{% endif %}
+		</ul>
+	</nav>
+	{% endif %}
+
+</div>

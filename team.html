@@ -1,0 +1,29 @@
+---
+layout: index
+---
+<!--
+  -- Blog
+  -->
+<div class="jumbotron">
+	<div class="container">
+		<h1 class="display-6">Team</h1>
+		<hr class="my-4">
+		<p class="lead">TeamNexus</p>
+	</div>
+</div>
+
+<div class="container">
+	<div class="card-columns">
+		{% for member in site.data.team %}
+		<div class="card" style="width: 20rem;">
+			<img class="card-img-top img-fluid" src="https://avatars3.githubusercontent.com/u/{{ member.github }}" alt="Profile-Picture">
+			<div class="card-block">
+				<a class="card-title" href="{{ member.url }}">{{ member.name }}</a>
+				<p class="card-text">{{ member.text }}</p>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+</div>
+
+<div class="gap-md">&nbsp;</div>

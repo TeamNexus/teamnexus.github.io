@@ -1,0 +1,55 @@
+@import 'bootswatch/lux/variables';
+@import 'bootstrap/bootstrap.scss';
+@import 'bootstrap/bootstrap-grid.scss';
+@import 'bootswatch/lux/bootswatch';
+
+/*
+ * General
+ */
+a, .btn {
+	cursor: pointer;
+}
+
+/*
+ * Jumbotron
+ */
+body {
+
+	> .jumbotron {
+		border-radius: 0px;
+	}
+
+}
+
+/*
+ * Cards
+ */
+.card-columns {
+	@include media-breakpoint-only(lg) {
+		column-count: 4;
+	}
+}
+
+/*
+ * Utils
+ */
+.gap-xx {
+	margin: 5px 0;
+	font-size: 0;
+}
+.gap-xs {
+	margin: 1rem 0;
+	font-size: 0;
+}
+.gap-sm {
+	margin: 2rem 0;
+	font-size: 0;
+}
+.gap-md {
+	margin: 3rem 0;
+	font-size: 0;
+}
+.gap-lg {
+	margin: 4rem 0;
+	font-size: 0;
+}

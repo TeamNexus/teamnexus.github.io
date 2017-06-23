@@ -1,0 +1,15 @@
+title: teamnexus.github.io
+description: AOSP Custom-ROM Development-Team
+permalink: /post/:year/:month/:day/:title/
+paginate: 6
+paginate_path: "/blog/:num/"
+show_downloads: true
+analytics:
+  google: false
+  piwik:
+    tracker: analytics.lukasberger.at
+    site: 13
+theme:
+layout: default
+excerpt_separator: <!-- more -->
+gems: [ jekyll-paginate ]
