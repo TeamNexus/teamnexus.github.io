@@ -19,6 +19,13 @@ layout: index
 			<a href="{{ post.url }}">
 				<h4 class="card-title">{{ post.title }}</h4>
 			</a>
+			<p class="card-text">
+				{% for category in post.categories %}
+				{% if category != "blog" %}
+				<span class="badge badge-pill badge-default">{{ category }}</span>&nbsp;
+				{% endif %}
+				{% endfor %}
+			</p>
 			<p class="card-text">{{ post.excerpt | markdownify }}</p>
 			<a href="{{ post.url }}" class="btn btn-primary">Continue reading</a>
 		</div>

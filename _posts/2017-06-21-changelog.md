@@ -3,7 +3,7 @@ author: Lukas Berger
 homepage: https://lukasberger.at/
 title: Changelog for 21st June 2017
 layout: blog
-categories: blog
+categories: blog Changelog
 ---
 As of 21st June 2017, two new power-profiles and some other enhancements have been added and made
 <!-- more -->
