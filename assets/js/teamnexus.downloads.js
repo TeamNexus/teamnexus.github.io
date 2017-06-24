@@ -2,23 +2,23 @@
  * JavaScript-Parser for NexusOS OTA-API
  *
  * @author		Lukas Berger <https://lukasberger.at>
- * @license		GPL-v3
+ * @license		GPL3
  */
 $(function() {
-	
+
 	$.ajax({
 		url: "https://stor.lukasberger.at/teamnexus/ota.php"
 	})
 		.done(ota_ajax_done)
 		.fail(ota_ajax_fail);
-	
+
 	$('#ota-search').keyup(function() {
-		
+
 		var text = $('#ota-search').val().toLowerCase().split(' ');
-		
-		
+
+
 		$('.ota-search').each(function() {
-			
+
 			var otaItem = $(this);
 			var otaSearchData = otaItem.attr('data-search');
 			var hasMatched = false;
@@ -28,28 +28,28 @@ $(function() {
 				if (i == 0 || hasMatched)
 					hasMatched = otaSearchData.toLowerCase().indexOf(textElement) > -1;
 			}
-			
+
 			if (hasMatched)
 				otaItem.css('display', 'inline-block');
 			else
 				otaItem.css('display', 'none');
-			
+
 		});
-		
+
 	});
-	
+
 });
-	
+
 function ota_ajax_fail(data) {
 	$('#modal-message-title').text("Failed to get build-informations");
 	$('#modal-message-content').html(
 		"<p>I couldn't fetch the current build-informations from the server :(</p>" +
 		"<p>Reload the page or wait some minutes</p>"
 	);
-	
+
 	$('#modal-message').modal();
 }
-	
+
 function ota_ajax_done(data) {
 	// loop through device-categories
 	for (var device in data) {
@@ -94,7 +94,7 @@ function ota_ajax_process_device_stage(stage, data) {
 			build_time_str  = Math.floor(build_time_diff / 3600);
 			build_time_str += " hour" + (build_time_str == 1 ? "" : "s") + " ago";
 		}
-		
+
 		var searchData = prop_nexus_otarom + ' ' + prop_product_brand + ' ' + prop_product_name + ' ' +prop_board_platform + ' ' + prop_product_board + ' ' +  prop_chipname;
 		var itemColor = (stage == "release" ? "success" : "warning");
 		var html = "";
@@ -110,7 +110,7 @@ function ota_ajax_process_device_stage(stage, data) {
 		html += '		<em class="fa fa-shield"></em> <strong>Security-Patch:</strong> ' + prop_build_version_security_patch;
 		html += '	</p>';
 		html += '</a>';
-		
+
 		$('#downloads').append(html);
 	}
 }

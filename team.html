@@ -15,7 +15,7 @@ layout: index
 <div class="container">
 	<div class="card-columns">
 		{% for member in site.data.team %}
-		<div class="card" style="width: 20rem;">
+		<div class="card">
 			<img class="card-img-top img-fluid" src="https://avatars3.githubusercontent.com/u/{{ member.github }}" alt="Profile-Picture">
 			<div class="card-block">
 				<a class="card-title" href="{{ member.url }}">{{ member.name }}</a>
