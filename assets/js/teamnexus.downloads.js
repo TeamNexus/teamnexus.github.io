@@ -14,31 +14,6 @@ $(function() {
 		.done(ota_ajax_done)
 		.fail(ota_ajax_fail);
 
-	$('#ota-search').keyup(function() {
-
-		var text = $('#ota-search').val().toLowerCase().split(' ');
-
-		$('tr[data-search]').each(function() {
-
-			var otaItem = $(this);
-			var otaSearchData = otaItem.attr('data-search');
-			var hasMatched = false;
-
-			for (var i = 0; i < text.length; i++) {
-				var textElement = text[i];
-				if (i == 0 || hasMatched)
-					hasMatched = otaSearchData.toLowerCase().indexOf(textElement) > -1;
-			}
-
-			if (hasMatched)
-				otaItem.css('display', 'table-row');
-			else
-				otaItem.css('display', 'none');
-
-		});
-
-	});
-
 });
 
 function ota_ajax_fail(data) {
