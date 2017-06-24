@@ -101,6 +101,7 @@ function ota_ajax_show_devices() {
 	var html = "";
 	var sidebar = "";
 	var id = "";
+	var filters = new Array();
 
 	// first, go through manufacturer
 	for (var manufacturer in DOWNLOADS) {
@@ -108,16 +109,26 @@ function ota_ajax_show_devices() {
 		var manufacturerSidebar = "";
 		models = sortObject(models);
 
+		if (filters[manufacturer] === undefined)
+			filters[manufacturer] = new Array();
+
 		// then through models
 		for (var model in models) {
 			var roms = models[model];
 			var modelSearchData = "";
 			var modelSidebar = "";
 			var modelHtml = "";
+			var modelInfo = "";
 			roms = sortObject(roms);
+
+			if (filters[manufacturer][model] === undefined)
+				filters[manufacturer][model] = new Array();
 
 			for (var rom in roms) {
 				var stages = roms[rom];
+
+				if ($.inArray(rom, filters[manufacturer][model]))
+					filters[manufacturer][model].push(rom);
 
 				// and then the ROMs
 				for (var stage in stages) {
@@ -172,7 +183,13 @@ function ota_ajax_show_devices() {
 						modelSearchData = prop_nexus_otarom + ' ' + modelSearchData;
 					}
 
-					modelHtml += '<tr id="' + id + '" class="table-' + stageColor + '" data-search="' + searchData + '" data-spy="scroll">';
+					modelInfo = "";
+					modelInfo += ' data-manufacturer="' + manufacturer.replace(' ', '-').toLowerCase() + '"';
+					modelInfo += ' data-model="' + model.replace(' ', '-').toLowerCase() + '"';
+					modelInfo += ' data-rom="' + rom.replace(' ', '-').toLowerCase() + '"';
+					modelInfo += ' data-stage="' + stage.toLowerCase() + '"';
+
+					modelHtml += '<tr id="' + id + '" class="table-' + stageColor + '" data-search="' + searchData + '"' + modelInfo + '>';
 					modelHtml += '	<th scope="row">';
 					modelHtml += '		<a href="' + url + '">' + prop_nexus_otarom + stageDisplay + '</a>';
 					modelHtml += '	</th>';
@@ -181,67 +198,86 @@ function ota_ajax_show_devices() {
 					modelHtml += '	<td>' + prop_build_version_release + ' (Patch ' + prop_build_version_security_patch + ')</td>';
 					modelHtml += '</tr>';
 
-					modelSidebar += '<li class="nav-item"><a class="nav-link" href="#' + id + '">' + rom + stageDisplay + '</a></li>';
+					modelSidebar += '<li class="nav-item downloads-sidebar" data-search="' + modelSearchData + '"' + modelInfo + '>';
+					modelSidebar += '	<a class="nav-link" href="#' + id + '">' + rom + stageDisplay + '</a>';
+					modelSidebar += '</li>';
 				}
 			}
 
 			id = manufacturer.toLowerCase().replace(' ', '-') + '-' + 
 				model.toLowerCase().replace(' ', '-');
 
-			html += '<tr id="' + id + '" class="thead-inverse" data-search="' + modelSearchData + '" data-spy="scroll">';
+			modelInfo = "";
+			modelInfo += ' data-manufacturer="' + manufacturer.replace(' ', '-').toLowerCase() + '"';
+			modelInfo += ' data-model="' + model.replace(' ', '-').toLowerCase() + '"';
+			modelInfo += ' data-rom=""';
+			modelInfo += ' data-stage=""';
+
+			html += '<tr id="' + id + '" class="thead-inverse" data-search="' + modelSearchData + '"' + modelInfo + '>';
 			html += '	<th scope="row" colspan="3">' + manufacturer + ' ' + model + '</th>';
 			html += '</tr>';
 			html += modelHtml;
 
-			manufacturerSidebar += '<li class="nav-item">';
+			manufacturerSidebar += '<li class="nav-item downloads-sidebar" data-search="' + modelSearchData + '"' + modelInfo + '>';
 			manufacturerSidebar += '	<a class="nav-link" href="#' + id + '">' + model + '</a>';
 			manufacturerSidebar += '	<ul class="nav nav-pills flex-column">' + modelSidebar + '</ul>';
 			manufacturerSidebar += '</li>';
 		}
 
-		sidebar += '<li class="nav-item">';
+		modelInfo = "";
+		modelInfo += ' data-manufacturer="' + manufacturer.replace(' ', '-').toLowerCase() + '"';
+		modelInfo += ' data-model=""';
+		modelInfo += ' data-rom=""';
+		modelInfo += ' data-stage=""';
+
+		sidebar += '<li class="nav-item downloads-sidebar" data-search="' + modelSearchData + '"' + modelInfo + '>';
 		sidebar += '	<span class="nav-link">' + manufacturer + '</span>';
 		sidebar += '	<ul class="nav nav-pills flex-column">' + manufacturerSidebar + '</ul>';
 		sidebar += '</li>';
 	}
 
+	// init filter
+	for (var manufacturer in filters) {
+		var models = filters[manufacturer];
+		for (var model in models) {
+			var roms = models[model];
+			for (var rom in roms) {
+				rom = roms[rom];
+				$('#downloads-rom').append('<option value="' + rom.replace(' ', '-').toLowerCase() + '">' + rom + '</option>');
+			}
+			$('#downloads-model').append('<option value="' + model.replace(' ', '-').toLowerCase() + '">' + model + '</option>');
+		}		
+		$('#downloads-manufacturer').append('<option value="' + manufacturer.replace(' ', '-').toLowerCase() + '">' + manufacturer + '</option>');
+	}
+	
+	$('#downloads-stage, #downloads-manufacturer, #downloads-model, #downloads-rom').change(function() {
+		var val_stage        = $('#downloads-stage').val();
+		var val_manufacturer = $('#downloads-manufacturer').val();
+		var val_model        = $('#downloads-model').val();
+		var val_rom          = $('#downloads-rom').val();
+
+		$('tr[data-search], li.downloads-sidebar[data-search]').each(function() {
+
+			var otaItem = $(this);
+			var data_stage        = otaItem.attr('data-stage');
+			var data_manufacturer = otaItem.attr('data-manufacturer');
+			var data_model        = otaItem.attr('data-model');
+			var data_rom          = otaItem.attr('data-rom');
+
+			if ((val_stage == "" || data_stage == "" || val_stage == data_stage) &&
+					(val_manufacturer == "" || data_manufacturer == "" || val_manufacturer == data_manufacturer) &&
+					(val_model == "" || data_model == "" || val_model == data_model) &&
+					(val_rom == "" || data_rom == "" || val_rom == data_rom))
+				otaItem.css('display', 'table-row');
+			else
+				otaItem.css('display', 'none');
+
+		});
+	});
+
 	$('#downloads').append(html);
 	$('#sidebar').css({ 'top': $('body > .container').offset().top });
 	$('#sidebar > ul').append(sidebar);
-}
-
-function clone(obj) {
-    var copy;
-
-    // Handle the 3 simple types, and null or undefined
-    if (null == obj || "object" != typeof obj) return obj;
-
-    // Handle Date
-    if (obj instanceof Date) {
-        copy = new Date();
-        copy.setTime(obj.getTime());
-        return copy;
-    }
-
-    // Handle Array
-    if (obj instanceof Array) {
-        copy = [];
-        for (var i = 0, len = obj.length; i < len; i++) {
-            copy[i] = clone(obj[i]);
-        }
-        return copy;
-    }
-
-    // Handle Object
-    if (obj instanceof Object) {
-        copy = {};
-        for (var attr in obj) {
-            if (obj.hasOwnProperty(attr)) copy[attr] = clone(obj[attr]);
-        }
-        return copy;
-    }
-
-    throw new Error("Unable to copy obj! Its type isn't supported.");
 }
 
 function sortObject(o) {
