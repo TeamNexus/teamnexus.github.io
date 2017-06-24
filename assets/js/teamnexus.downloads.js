@@ -74,14 +74,12 @@ function ota_ajax_process_device_stage(stage, data) {
 
 function ota_ajax_show_devices() {
 	var html = "";
-	var sidebar = "";
 	var id = "";
 	var filters = new Array();
 
 	// first, go through manufacturer
 	for (var manufacturer in DOWNLOADS) {
 		var models = DOWNLOADS[manufacturer];
-		var manufacturerSidebar = "";
 		models = sortObject(models);
 
 		if (filters[manufacturer] === undefined)
@@ -91,7 +89,6 @@ function ota_ajax_show_devices() {
 		for (var model in models) {
 			var roms = models[model];
 			var modelSearchData = "";
-			var modelSidebar = "";
 			var modelHtml = "";
 			var modelInfo = "";
 			roms = sortObject(roms);
@@ -172,10 +169,6 @@ function ota_ajax_show_devices() {
 					modelHtml += '	<td>' + dateFormat(prop_build_data_utc * 1000, "dd.mm.yyyy, HH:MM:ss") + '</td>';
 					modelHtml += '	<td>' + prop_build_version_release + ' (Patch ' + prop_build_version_security_patch + ')</td>';
 					modelHtml += '</tr>';
-
-					modelSidebar += '<li class="nav-item downloads-sidebar" data-search="' + modelSearchData + '"' + modelInfo + '>';
-					modelSidebar += '	<a class="nav-link" href="#' + id + '">' + rom + stageDisplay + '</a>';
-					modelSidebar += '</li>';
 				}
 			}
 
@@ -192,11 +185,6 @@ function ota_ajax_show_devices() {
 			html += '	<th scope="row" colspan="3">' + manufacturer + ' ' + model + '</th>';
 			html += '</tr>';
 			html += modelHtml;
-
-			manufacturerSidebar += '<li class="nav-item downloads-sidebar" data-search="' + modelSearchData + '"' + modelInfo + '>';
-			manufacturerSidebar += '	<a class="nav-link" href="#' + id + '">' + model + '</a>';
-			manufacturerSidebar += '	<ul class="nav nav-pills flex-column">' + modelSidebar + '</ul>';
-			manufacturerSidebar += '</li>';
 		}
 
 		modelInfo = "";
@@ -204,11 +192,6 @@ function ota_ajax_show_devices() {
 		modelInfo += ' data-model=""';
 		modelInfo += ' data-rom=""';
 		modelInfo += ' data-stage=""';
-
-		sidebar += '<li class="nav-item downloads-sidebar" data-search="' + modelSearchData + '"' + modelInfo + '>';
-		sidebar += '	<span class="nav-link">' + manufacturer + '</span>';
-		sidebar += '	<ul class="nav nav-pills flex-column">' + manufacturerSidebar + '</ul>';
-		sidebar += '</li>';
 	}
 
 	// init filter
@@ -251,8 +234,6 @@ function ota_ajax_show_devices() {
 	});
 
 	$('#downloads').append(html);
-	$('#sidebar').css({ 'top': $('body > .container').offset().top });
-	$('#sidebar > ul').append(sidebar);
 }
 
 function sortObject(o) {
