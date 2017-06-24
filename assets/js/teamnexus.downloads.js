@@ -89,9 +89,15 @@ function ota_ajax_process_device_stage(stage, data) {
 		} else if (build_time_diff >= 86400) {
 			build_time_str  = Math.floor(build_time_diff / 86400);
 			build_time_str += " day" + (build_time_str == 1 ? "" : "s") + " ago";
-		} else {
+		} else if (build_time_diff >= 3600) {
 			build_time_str  = Math.floor(build_time_diff / 3600);
 			build_time_str += " hour" + (build_time_str == 1 ? "" : "s") + " ago";
+		} else if (build_time_diff >= 60) {
+			build_time_str  = Math.floor(build_time_diff / 60);
+			build_time_str += " minute" + (build_time_str == 1 ? "" : "s") + " ago";
+		} else {
+			build_time_str  = Math.floor(build_time_diff);
+			build_time_str += " second" + (build_time_str == 1 ? "" : "s") + " ago";
 		}
 
 		var searchData = prop_nexus_otarom + ' ' + prop_product_brand + ' ' + prop_product_name + ' ' +prop_board_platform + ' ' + prop_product_board + ' ' +  prop_chipname;
