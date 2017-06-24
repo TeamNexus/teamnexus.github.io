@@ -86,9 +86,12 @@ function ota_ajax_process_device_stage(stage, data) {
 		if (DOWNLOADS[prop_product_brand][prop_product_name][rom] === undefined)
 			DOWNLOADS[prop_product_brand][prop_product_name][rom] = new Array();
 
-		DOWNLOADS[prop_product_brand][prop_product_name][rom]['url'] = url;
-		DOWNLOADS[prop_product_brand][prop_product_name][rom]['stage'] = stage;
-		DOWNLOADS[prop_product_brand][prop_product_name][rom]['props'] = props;
+		if (DOWNLOADS[prop_product_brand][prop_product_name][rom][stage] === undefined)
+			DOWNLOADS[prop_product_brand][prop_product_name][rom][stage] = new Array();
+
+		DOWNLOADS[prop_product_brand][prop_product_name][rom][stage]['url'] = url;
+		DOWNLOADS[prop_product_brand][prop_product_name][rom][stage]['stage'] = stage;
+		DOWNLOADS[prop_product_brand][prop_product_name][rom][stage]['props'] = props;
 	}
 
 	DOWNLOADS = sortObject(DOWNLOADS);
@@ -113,68 +116,73 @@ function ota_ajax_show_devices() {
 			var modelHtml = "";
 			roms = sortObject(roms);
 
-			// and then the ROMs
 			for (var rom in roms) {
-				var data  = roms[rom];
-				var props = data['props'];
-				var stage = data['stage'];
-				var url   = data['url'];
+				var stages = roms[rom];
 
-				var prop_board_platform               = props['ro.board.platform'];
-				var prop_build_data_utc               = parseInt(props['ro.build.date.utc']);
-				var prop_product_board                = props['ro.product.board'];
-				var prop_product_brand                = props['ro.product.brand'];
-				var prop_product_name                 = props['ro.product.name'];
-				var prop_chipname                     = props['ro.chipname'];
-				var prop_nexus_otarom                 = props['ro.nexus.otarom'];
-				var prop_build_version_release        = props['ro.build.version.release'];
-				var prop_build_version_security_patch = props['ro.build.version.security_patch'];
+				// and then the ROMs
+				for (var stage in stages) {
+					var data  = stages[stage];
+					var props = data['props'];
+					var url   = data['url'];
 
-				var build_time_diff = (Math.round(new Date() / 1000) - prop_build_data_utc);
-				var build_time_str  = "";
-				if (build_time_diff >= 31536000) {
-					build_time_str  = Math.floor(build_time_diff / 31536000);
-					build_time_str += " year" + (build_time_str == 1 ? "" : "s") + " ago";
-				} else if (build_time_diff >= 2073600) {
-					build_time_str  = Math.floor(build_time_diff / 2073600);
-					build_time_str += " month" + (build_time_str == 1 ? "" : "s") + " ago";
-				} else if (build_time_diff >= 86400) {
-					build_time_str  = Math.floor(build_time_diff / 86400);
-					build_time_str += " day" + (build_time_str == 1 ? "" : "s") + " ago";
-				} else if (build_time_diff >= 3600) {
-					build_time_str  = Math.floor(build_time_diff / 3600);
-					build_time_str += " hour" + (build_time_str == 1 ? "" : "s") + " ago";
-				} else if (build_time_diff >= 60) {
-					build_time_str  = Math.floor(build_time_diff / 60);
-					build_time_str += " minute" + (build_time_str == 1 ? "" : "s") + " ago";
-				} else {
-					build_time_str  = Math.floor(build_time_diff);
-					build_time_str += " second" + (build_time_str == 1 ? "" : "s") + " ago";
+					var prop_board_platform               = props['ro.board.platform'];
+					var prop_build_data_utc               = parseInt(props['ro.build.date.utc']);
+					var prop_product_board                = props['ro.product.board'];
+					var prop_product_brand                = props['ro.product.brand'];
+					var prop_product_name                 = props['ro.product.name'];
+					var prop_chipname                     = props['ro.chipname'];
+					var prop_nexus_otarom                 = props['ro.nexus.otarom'];
+					var prop_build_version_release        = props['ro.build.version.release'];
+					var prop_build_version_security_patch = props['ro.build.version.security_patch'];
+
+					var build_time_diff = (Math.round(new Date() / 1000) - prop_build_data_utc);
+					var build_time_str  = "";
+					if (build_time_diff >= 31536000) {
+						build_time_str  = Math.floor(build_time_diff / 31536000);
+						build_time_str += " year" + (build_time_str == 1 ? "" : "s") + " ago";
+					} else if (build_time_diff >= 2073600) {
+						build_time_str  = Math.floor(build_time_diff / 2073600);
+						build_time_str += " month" + (build_time_str == 1 ? "" : "s") + " ago";
+					} else if (build_time_diff >= 86400) {
+						build_time_str  = Math.floor(build_time_diff / 86400);
+						build_time_str += " day" + (build_time_str == 1 ? "" : "s") + " ago";
+					} else if (build_time_diff >= 3600) {
+						build_time_str  = Math.floor(build_time_diff / 3600);
+						build_time_str += " hour" + (build_time_str == 1 ? "" : "s") + " ago";
+					} else if (build_time_diff >= 60) {
+						build_time_str  = Math.floor(build_time_diff / 60);
+						build_time_str += " minute" + (build_time_str == 1 ? "" : "s") + " ago";
+					} else {
+						build_time_str  = Math.floor(build_time_diff);
+						build_time_str += " second" + (build_time_str == 1 ? "" : "s") + " ago";
+					}
+
+					id = manufacturer.toLowerCase().replace(' ', '-') + '-' + 
+						model.toLowerCase().replace(' ', '-') + '-' +
+						rom.toLowerCase().replace(' ', '-') + '-' +
+						stage.toLowerCase().replace(' ', '-');
+
+					var searchData = prop_nexus_otarom + ' ' + prop_product_brand + ' ' + prop_product_name + ' ' +prop_board_platform + ' ' + prop_product_board + ' ' +  prop_chipname;
+					var stageColor = (stage == "release" ? "success" : "warning");
+					var stageDisplay = ' (' + (stage == "release" ? "Release" : "Testing") + ')';
+
+					if (modelSearchData == "") {
+						modelSearchData = searchData;
+					} else {
+						modelSearchData = prop_nexus_otarom + ' ' + modelSearchData;
+					}
+
+					modelHtml += '<tr id="' + id + '" class="table-' + stageColor + '" data-search="' + searchData + '" data-spy="scroll">';
+					modelHtml += '	<th scope="row">';
+					modelHtml += '		<a href="' + url + '">' + prop_nexus_otarom + stageDisplay + '</a>';
+					modelHtml += '	</th>';
+					// modelHtml += '	<td>' + prop_product_brand + ' ' + prop_product_name + '</td>';
+					modelHtml += '	<td>' + dateFormat(prop_build_data_utc * 1000, "dd.mm.yyyy, HH:MM:ss") + '</td>';
+					modelHtml += '	<td>' + prop_build_version_release + ' (Patch ' + prop_build_version_security_patch + ')</td>';
+					modelHtml += '</tr>';
+
+					modelSidebar += '<li class="nav-item"><a class="nav-link" href="#' + id + '">' + rom + stageDisplay + '</a></li>';
 				}
-
-				id = manufacturer.toLowerCase().replace(' ', '-') + '-' + 
-					model.toLowerCase().replace(' ', '-') + '-' +
-					rom.toLowerCase().replace(' ', '-');
-
-				var searchData = prop_nexus_otarom + ' ' + prop_product_brand + ' ' + prop_product_name + ' ' +prop_board_platform + ' ' + prop_product_board + ' ' +  prop_chipname;
-				var itemColor = (stage == "release" ? "success" : "warning");
-
-				if (modelSearchData == "") {
-					modelSearchData = searchData;
-				} else {
-					modelSearchData = prop_nexus_otarom + ' ' + modelSearchData;
-				}
-
-				modelHtml += '<tr id="' + id + '" data-search="' + searchData + '" data-spy="scroll">';
-				modelHtml += '	<th scope="row">';
-				modelHtml += '		<a href="' + url + '">' + prop_nexus_otarom + '</a>';
-				modelHtml += '	</th>';
-				// modelHtml += '	<td>' + prop_product_brand + ' ' + prop_product_name + '</td>';
-				modelHtml += '	<td>' + dateFormat(prop_build_data_utc * 1000, "dd.mm.yyyy, HH:MM:ss") + '</td>';
-				modelHtml += '	<td>' + prop_build_version_release + ' (Patch ' + prop_build_version_security_patch + ')</td>';
-				modelHtml += '</tr>';
-
-				modelSidebar += '<li class="nav-item"><a class="nav-link" href="#' + id + '">' + rom + '</a></li>';
 			}
 
 			id = manufacturer.toLowerCase().replace(' ', '-') + '-' + 
