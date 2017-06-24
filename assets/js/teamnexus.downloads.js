@@ -16,7 +16,6 @@ $(function() {
 
 		var text = $('#ota-search').val().toLowerCase().split(' ');
 
-
 		$('.ota-search').each(function() {
 
 			var otaItem = $(this);
@@ -105,7 +104,7 @@ function ota_ajax_process_device_stage(stage, data) {
 		html += '		<small>' + build_time_str + '</small>';
 		html += '	</div>';
 		html += '	<p>';
-		html += '		<em class="fa fa-clock-o"></em> <strong>Build-Date:</strong> ' + dateFormat(prop_build_data_utc * 1000, "dd.mm.yyyy, hh:MM:ss") + '<br />';
+		html += '		<em class="fa fa-clock-o"></em> <strong>Build-Date:</strong> ' + dateFormat(prop_build_data_utc * 1000, "dd.mm.yyyy, HH:MM:ss") + '<br />';
 		html += '		<em class="fa fa-android"></em> <strong>Release:</strong> ' + prop_build_version_release + '<br />';
 		html += '		<em class="fa fa-shield"></em> <strong>Security-Patch:</strong> ' + prop_build_version_security_patch;
 		html += '	</p>';
