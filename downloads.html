@@ -1,6 +1,7 @@
 ---
 layout: index
 permalink: /downloads
+scrollspy: downloads-scrollspy
 ---
 <!--
   -- Downloads
@@ -14,6 +15,10 @@ permalink: /downloads
 	</div>
 </div>
 
+<div id="sidebar">
+	<ul class="nav nav-pills flex-column" role="tablist"></ul>
+</div>
+
 <div class="container">
 
 	<div class="row">
@@ -25,7 +30,17 @@ permalink: /downloads
 	</div>
 	
 	<div class="gap-sm">&nbsp;</div>
-	
-	<div id="downloads"></div>
+
+	<table class="table">
+		<thead class="thead-inverse">
+			<tr>
+				<th>ROM</th>
+				<!-- <th>Device</th> -->
+				<th>Build-Date</th>
+				<th>Version</th>
+			</tr>
+		</thead>
+		<tbody id="downloads"></tbody>
+	</table>
 
 </div>

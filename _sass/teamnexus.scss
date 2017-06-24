@@ -3,25 +3,32 @@
 @import 'bootstrap/bootstrap-grid.scss';
 @import 'bootswatch/lux/bootswatch';
 
-/*
- * General
- */
-a, .btn {
-	cursor: pointer;
-}
-b, strong {
-    font-weight: bold;
-}
-
-/*
- * Jumbotron
- */
 body {
 
 	> .jumbotron {
 		border-radius: 0px;
 	}
+	
+	&.scrollspy-body {
+		position: relative;
+	}
 
+}
+
+#sidebar {
+	position: absolute;
+	left: 0;
+
+	ul.nav > li.nav-item {
+		padding-left: 2rem;
+	}
+}
+
+a, .btn {
+	cursor: pointer;
+}
+b, strong {
+    font-weight: bold;
 }
 
 /*
