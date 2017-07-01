@@ -15,3 +15,4 @@ We finally fixed the incall-issue!
 ### Fixed/Improved
 
  * Fixed call-volume changing/muting
+ * Various changes to all five power-profiles for better performance and battery-lifetime
