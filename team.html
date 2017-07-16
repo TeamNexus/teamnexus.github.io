@@ -13,7 +13,7 @@ layout: index
 </div>
 
 <div class="container">
-	<div class="card-columns">
+	<div class="card-group">
 		{% for member in site.data.team %}
 		<div class="card">
 			<img class="card-img-top img-fluid" src="https://avatars3.githubusercontent.com/u/{{ member.github }}" alt="Profile-Picture">
@@ -21,6 +21,13 @@ layout: index
 				<a class="card-title" href="{{ member.url }}">{{ member.name }}</a>
 				<p class="card-text">{{ member.text }}</p>
 			</div>
+			{% if member.paypal %}
+			<div class="card-block">
+				<a href="https://www.paypal.me/{{ member.paypal }}" class="card-link">
+					<i class="fa fa-paypal"></i> Donate on PayPal
+				</a>
+			</div>
+			{% endif %}
 		</div>
 		{% endfor %}
 	</div>
