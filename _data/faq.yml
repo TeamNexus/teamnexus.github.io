@@ -1,0 +1,23 @@
+- question: 'Is my model/model SM-G92xx supported?'
+  answer: 'If the build is from the download-page, that ROM supports every single model, but some models, like the Sprint ones, need a custom system-image which we don''t provide... And no, The Edge+ is NOT supported by us. If it''s a build posted by us (most often by Lukas0610), it''s probably Flat (G920F)-ONLY'
+  
+- question: XYZ is not working
+  answer: '<img src="/assets/images/logcat-or-gtfo.jpg">'
+
+- question: 'How do I install this?'
+  answer: '<strong>Short answer:</strong> <a href="https://www.youtube.com/watch?v=JmvCpR45LKA">Click here</a><br /><strong>Long answer: </strong> Follow <a href="https://wiki.lineageos.org/devices/herolte/install">Lineage''s guide for the Galaxy S7</a>, pretty much the same for the Galaxy S6 (Edge), except that you shouldn''t download and flash the S7-build'
+  
+- question: 'Changelog? Download-Link?'
+  answer: 'Just take a look on this page, we can expect at least a bit of independence when flashing a custom ROM, can we?'
+
+- question: 'Any ETA for the next update?'
+  answer: '<a href="https://www.youtube.com/watch?v=JmvCpR45LKA">https://www.youtube.com/watch?v=JmvCpR45LKA</a>'
+  
+- question: Can you help me with XYZ?
+  answer: 'Ask the great community in our Telegram-group: <a href="https://telegram.me/joinchat/CaccS0A5Th5ZJmn7IOn3xg">AOSP Discussion Group</a>'
+  
+- question: Can you add feature XYZ?
+  answer: Fill out the template at our issue-tracker and mark it a feature-request. And I promise you, if the template isn't filled properly (except device-infos, only required for bugs), that issue is fu**ing closed
+  
+- question: Help, bootloop!!!
+  answer: '<img src="/assets/images/logcat-or-gtfo.jpg">'
