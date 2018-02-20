@@ -8,6 +8,11 @@ layout: index
 	<div class="container">
 		<h1 class="display-6">{{ site.title }}</h1>
 		<p class="lead">{{ site.description }}</p>
+		<noscript>
+			<div class="alert alert-danger mt-5" role="alert">
+				<strong>Error</strong> This site requires JavaScript to work
+			</div>
+		</noscript>
 	</div>
 </div>
 
@@ -25,29 +30,49 @@ layout: index
 			</tr>
 		</thead>
 		<tbody id="downloads">
+			<tr id="downloads-loading">
+				<td colspan="6">Loading...</th>
+			</tr>
 		</tbody>
 	</table>
 
 </div>
 
-<div class="modal">
-	<div class="modal-dialog" role="document">
+<div class="modal fade" id="dlmodal">
+	<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title">Modal title</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
+				<h5 class="modal-title">Downloading <span class="dlmodal-build-type"></span> for <span class="dlmodal-device-display-name"></span> (<span class="dlmodal-device-model"></span>)...</h5>
 			</div>
 			<div class="modal-body">
-				<p>Modal body text goes here.</p>
+				<div class="row mb-0">
+					<div class="col-sm-2 col-12"><strong>Device</strong></div>
+					<div class="col-sm-10 col-12"><span class="dlmodal-device-display-name"></span></div>
+				</div>
+				<div class="row mb-0">
+					<div class="col-sm-2 col-12"><strong>Model</strong></div>
+					<div class="col-sm-10 col-12"><span class="dlmodal-device-model"></span></div>
+				</div>
+				<div class="row mb-0">
+					<div class="col-sm-2 col-12"><strong>ROM</strong></div>
+					<div class="col-sm-10 col-12"><span class="dlmodal-rom-name"></span> <span class="dlmodal-rom-version"></span></div>
+				</div>
+				<div class="row mb-0">
+					<div class="col-sm-2 col-12"><strong>Built on</strong></div>
+					<div class="col-sm-10 col-12"><span class="dlmodal-rom-date"></span></div>
+				</div>
+				<div class="progress mt-3 mb-0">
+					<div class="progress-bar bg-info progress-bar-striped progress-bar-animated" role="progressbar" id="dlmodal-progress"></div>
+				</div>
+				<div class="row mt-1">
+					<div class="col-12 text-right">
+						<span id="dlmodal-progress-text"></span>
+					</div>
+				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-primary">Save changes</button>
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-danger btn-block" id="dlmodal-abort">Abort</button>
 			</div>
 		</div>
 	</div>
 </div>
-
-
