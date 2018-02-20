@@ -1,7 +1,7 @@
-@import 'bootswatch/lux/variables';
+@import 'bootswatch/solar/variables';
 @import 'bootstrap/bootstrap.scss';
 @import 'bootstrap/bootstrap-grid.scss';
-@import 'bootswatch/lux/bootswatch';
+@import 'bootswatch/solar/bootswatch';
 
 body {
 
@@ -18,44 +18,7 @@ body {
 a, .btn {
 	cursor: pointer;
 }
+
 b, strong {
     font-weight: bold;
-}
-
-/*
- * Cards
- */
-.card-group {
-
-	.card {
-		border: 5px transparent solid !important;
-		margin-bottom: 20px;
-		min-width: 25%;
-		max-width: 25%;
-	}
-
-}
-
-/*
- * Utils
- */
-.gap-xx {
-	margin: .75rem 0;
-	font-size: 0;
-}
-.gap-xs {
-	margin: 1rem 0;
-	font-size: 0;
-}
-.gap-sm {
-	margin: 2rem 0;
-	font-size: 0;
-}
-.gap-md {
-	margin: 3rem 0;
-	font-size: 0;
-}
-.gap-lg {
-	margin: 4rem 0;
-	font-size: 0;
 }

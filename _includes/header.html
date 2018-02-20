@@ -10,44 +10,40 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="theme-color" content="#157878">
 
-		<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
-		<link rel="stylesheet" href="https://opensource.keycdn.com/fontawesome/4.7.0/font-awesome.min.css" integrity="sha384-dNpIIXE8U05kAbPhy3G1cz+yZmTzA6CY8Vg/u2L9xRnHjJiAK76m2BIEaSEV+/aU" crossorigin="anonymous"> 
+		<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 		<link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
 
 	</head>
 
 	<body class="layout-{{ page.layout }}">
 
-		<nav class="navbar navbar-toggleable-md navbar-inverse bg-primary">
-			<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		
+			<div class="container">
 
-			<a class="navbar-brand" href="/">{{ site.title }}</a>
+				<a class="navbar-brand" href="#">{{ site.title }}</a>
 
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<ul class="navbar-nav mr-auto">
-					<li class="nav-item{% if page.url == "/" %} active{% endif %}">
-						<a class="nav-link" href="/"><em class="fa fa-paper-plane"></em> Blog</a>
-					</li>
-					<!-- <li class="nav-item{% if page.url == "/downloads/" %} active{% endif %}">
-						<a class="nav-link" href="/downloads"><em class="fa fa-cloud-download"></em> Downloads</a>
-					</li> -->
-					<li class="nav-item">
-						<a class="nav-link" href="https://files.nexus-roms.eu/"><em class="fa fa-cloud-download"></em> Downloads</a>
-					</li>
-					<li class="nav-item{% if page.url == "/team/" %} active{% endif %}">
-						<a class="nav-link" href="/team"><em class="fa fa-users"></em> Team</a>
-					</li>
-					<li class="nav-item{% if page.url == "/faq/" %} active{% endif %}">
-						<a class="nav-link" href="/faq"><em class="fa fa-question-circle"></em> FAQ</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="https://github.com/TeamNexus/issues"><em class="fa fa-exclamation-circle"></em> Issues <em class="fa fa-external-link"></em></a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="https://github.com/TeamNexus"><em class="fa fa-github"></em> GitHub <em class="fa fa-external-link"></em></a>
-					</li>
-				</ul>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle Navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+
+				<div class="collapse navbar-collapse" id="navigation">
+					<ul class="navbar-nav mr-auto">
+						<li class="nav-item{% if page.url == "/" %} active{% endif %}">
+							<a class="nav-link" href="#">Blog{% if page.url == "/" %} <span class="sr-only">(current)</span>{% endif %}</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="https://stor.lukasberger.at/TeamNexus/" target="_blank">Downloads <i class="fas fa-external-link-alt ml-2"></i></a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="https://github.com/TeamNexus/" target="_blank">Sources <i class="fas fa-external-link-alt ml-2"></i></a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="https://github.com/TeamNexus/issues/" target="_blank">Issues <i class="fas fa-external-link-alt ml-2"></i></a>
+						</li>
+					</ul>
+				</div>
+
 			</div>
+
 		</nav>
