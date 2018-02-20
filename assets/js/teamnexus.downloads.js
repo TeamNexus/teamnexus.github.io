@@ -103,6 +103,8 @@ $(function() {
 						var a = document.createElement("a");
 						var filename = downloadURL.substring(downloadURL.lastIndexOf('/')+1);
 
+						$('#dlmodal').modal("hide");
+
 						a.href = downloadUrl;
 						a.download = filename;
 						document.body.appendChild(a);
